@@ -53,4 +53,13 @@ class ClientService:
         if nerf:
             return ("Video ready", nerf.rendered_video_path)
         return None
+    
+
+    def get_center_image(self, uuid):
+        frame = self.manager.get_frame(uuid)
+        if frame: 
+            return ("Image ready", frame.file_path)
+
+        return None 
+
         

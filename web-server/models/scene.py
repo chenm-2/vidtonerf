@@ -265,3 +265,12 @@ class SceneManager:
             return Sfm.from_dict(doc["nerf"])
         else:
             return None
+        
+    def get_frame(self, _id: str) -> Frame: 
+        key = {"_id":id}
+        doc = self.collection.find_one(key)
+        if doc and "frame" in doc: 
+            return Frame.from_dict(doc["frame"])
+        else: 
+            return None 
+ 

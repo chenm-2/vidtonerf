@@ -93,6 +93,22 @@ class WebServer:
             response.headers['Access-Control-Allow-Origin'] = '*'
             return response
 
+        @self.app.route("/center_image/<vidid>", methods=["GET"])
+        def get_image_from_endpoint(vidid: str):
+            ospath = None 
+            status_str = "Processing"
+            if is_valid_uuid(vidid):
+                os_path = self.cservice.get_center_image(vidid)
+            if ospath == None or not os.path.exists(ospath):
+                response = make_response(status_str)
+            else: 
+                status_str = "Image ready"
+                response = make_response(send_file(os_path, as_attachment=True))
+            
+            response.headers['Access-Control-Allow-Origin'] = '*'
+            return response
+
+
         @self.app.route("/worker-data/<path:path>")
         def send_worker_data(path):
             # serves data directory for workers to pull any local data
